@@ -83,6 +83,42 @@ class MotorcycleController {
     };
     return this.res.status(200).json(response);
   }
+
+  public async updateById() {
+    const { id } = this.req.params;
+    const {
+      model,
+      year,
+      color,
+      status,
+      buyValue,
+      category,
+      engineCapacity,
+    } = this.req.body;
+    const { type, message } = await this.service.updateById({
+      id,
+      model,
+      year,
+      color,
+      status,
+      buyValue,
+      category,
+      engineCapacity,
+    } as IMotorcycle);
+
+    if (type) return this.res.status(type).json({ message });
+
+    return this.res.status(200).json({ 
+      id,
+      model,
+      year,
+      color,
+      status,
+      buyValue,
+      category,
+      engineCapacity,
+    });
+  }
 }
 
 export default MotorcycleController;

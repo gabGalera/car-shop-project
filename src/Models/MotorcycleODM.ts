@@ -22,8 +22,8 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
       color: moto.color,
       status: moto.status,
       buyValue: moto.buyValue,
-      doorsQty: moto.category,
-      seatsQty: moto.engineCapacity,
+      category: moto.category,
+      engineCapacity: moto.engineCapacity,
     });
 
     return newMoto;
@@ -37,6 +37,33 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
     return this.model.findOne({
       _id: id,
     });
+  }
+
+  public async updateById({ 
+    id,
+    model: carModel,
+    year,
+    color,
+    status,
+    buyValue,
+    category,
+    engineCapacity }: IMotorcycle) {
+    this.model.updateOne(
+      {
+        _id: id,
+      },
+      { 
+        $set: {
+          model: carModel,
+          year,
+          color,
+          status,
+          buyValue,
+          category,
+          engineCapacity, 
+        },
+      },
+    );
   }
 }
 

@@ -17,6 +17,12 @@ motoRoutes.get(
     new MotorcycleController(req, res, next).findById(),
 );
 
+motoRoutes.put(
+  '/:id', 
+  (req: Request, res: Response, next: NextFunction) => 
+    new MotorcycleController(req, res, next).updateById(),
+);
+
 motoRoutes.get(
   '/', 
   (req: Request, res: Response, next: NextFunction) => 
