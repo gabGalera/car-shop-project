@@ -1,27 +1,23 @@
-import { Model, Schema, model, models } from 'mongoose';
+import { Model, model, models } from 'mongoose';
 import ICar from '../Interfaces/ICar';
+import AbstractODM from './AbstractODM';
+// import AbstractODM from './AbstractODM';
 
-class CarODM {
-  private schema: Schema;
-  private carModel: Model<ICar>;
-
+class CarODM extends AbstractODM<ICar> {
+  private model: Model<ICar>;
   constructor() {
-    this.schema = new Schema<ICar>({
-      model: { type: String, required: true },
-      year: { type: Number, required: true },
-      color: { type: String, required: true },
-      status: { type: Boolean, required: false },
-      buyValue: { type: Number, required: true },
+    super();
+    this.schema = this.schema.add({
       doorsQty: { type: Number, required: true },
       seatsQty: { type: Number, required: true },
     });
 
-    this.carModel = models.Car || model('Car', this.schema);
+    this.model = models.Car || model('Car', this.schema);
   }
 
   public async create(car: ICar): Promise<ICar | null> {
-    await this.carModel.create({ ...car });
-    const newCar = await this.carModel.findOne({
+    await this.model.create({ ...car });
+    const newCar = await this.model.findOne({
       model: car.model,
       year: car.year,
       color: car.color,
@@ -35,11 +31,11 @@ class CarODM {
   }
 
   public async findCars(): Promise<ICar[] | null> {
-    return this.carModel.find();
+    return this.model.find();
   }
 
   public async findOneCar(id: string): Promise<ICar | null> {
-    return this.carModel.findOne({
+    return this.model.findOne({
       _id: id,
     });
   }
@@ -53,7 +49,7 @@ class CarODM {
     buyValue,
     doorsQty,
     seatsQty }: ICar) {
-    this.carModel.updateOne(
+    this.model.updateOne(
       {
         _id: id,
       },
