@@ -11,7 +11,7 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
       engineCapacity: { type: Number, required: true },
     });
 
-    this.model = models.Car || model('Car', this.schema);
+    this.model = models.Motorcycle || model('Motorcycle', this.schema);
   }
 
   public async create(moto: IMotorcycle): Promise<IMotorcycle | null> {
@@ -27,6 +27,10 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
     });
 
     return newMoto;
+  }
+
+  public async findAll(): Promise<IMotorcycle[] | null> {
+    return this.model.find();
   }
 }
 

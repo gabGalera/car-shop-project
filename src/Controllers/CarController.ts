@@ -43,8 +43,8 @@ class CarController {
     }
   }
 
-  public async findCars() {
-    const { type, message } = await this.service.findCars();
+  public async findAll() {
+    const { type, message } = await this.service.findAll();
 
     if (type) return this.res.status(404).json({ message }); 
 

@@ -2,36 +2,41 @@ import { NextFunction, Request, Response, Router } from 'express';
 import CarController from '../Controllers/CarController';
 import MotorcycleController from '../Controllers/MotorcycleController';
 
-const carRoutes = Router();
-const motoRoutes = Router();
+const routes = Router();
 
-motoRoutes.post(
-  '/', 
+routes.post(
+  '/motorcycles', 
   (req: Request, res: Response, next: NextFunction) => 
     new MotorcycleController(req, res, next).create(),
 );
 
-carRoutes.put(
-  '/:id', 
+routes.get(
+  '/motorcycles', 
+  (req: Request, res: Response, next: NextFunction) => 
+    new MotorcycleController(req, res, next).findAll(),
+);
+
+routes.put(
+  '/cars/:id', 
   (req: Request, res: Response, next: NextFunction) => 
     new CarController(req, res, next).updateById(),
 );
 
-carRoutes.get(
-  '/:id', 
+routes.get(
+  '/cars/:id', 
   (req: Request, res: Response, next: NextFunction) => 
     new CarController(req, res, next).findOneCar(),
 );
 
-carRoutes.get(
-  '/', 
+routes.get(
+  '/cars', 
   (req: Request, res: Response, next: NextFunction) => 
-    new CarController(req, res, next).findCars(),
+    new CarController(req, res, next).findAll(),
 );
 
-carRoutes.post(
-  '/', 
+routes.post(
+  '/cars', 
   (req: Request, res: Response, next: NextFunction) => new CarController(req, res, next).create(),
 );
 
-export { carRoutes, motoRoutes };
+export default routes;

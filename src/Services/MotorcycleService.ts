@@ -26,6 +26,15 @@ class MotorcycleService {
 
     return this.createCarDomain(newMoto);
   }
+
+  public async findAll(): Promise<{ type: number, message: IMotorcycle[] | null | string }> {
+    const motoODM = new MotorcycleODM();
+    const allmotos = await motoODM.findAll();
+
+    if (!allmotos) return { type: 404, message: 'Motorcycle not found' };
+    
+    return { type: 0, message: allmotos };
+  }
 }
 
 export default MotorcycleService;

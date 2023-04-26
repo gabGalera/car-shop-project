@@ -29,9 +29,9 @@ class CarService {
     return this.createCarDomain(newCar);
   }
 
-  public async findCars(): Promise<{ type: number, message: ICar[] | null | string }> {
+  public async findAll(): Promise<{ type: number, message: ICar[] | null | string }> {
     const carODM = new CarODM();
-    const allCars = await carODM.findCars();
+    const allCars = await carODM.findAll();
 
     if (!allCars) return { type: 404, message: carNotFound };
     

@@ -42,6 +42,26 @@ class MotorcycleController {
       this.next(error);
     }
   }
+
+  public async findAll() {
+    const { type, message } = await this.service.findAll();
+
+    if (type) return this.res.status(404).json({ message }); 
+
+    const allMotos = message as IMotorcycle[];
+
+    const response = allMotos.map((moto) => ({
+      id: moto.id,
+      model: moto.model, 
+      year: moto.year,
+      color: moto.color,
+      status: moto.status,
+      buyValue: moto.buyValue,
+      category: moto.category,
+      engineCapacity: moto.engineCapacity,
+    }));
+    return this.res.status(200).json(response);
+  }
 }
 
 export default MotorcycleController;
