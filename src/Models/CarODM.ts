@@ -3,7 +3,7 @@ import ICar from '../Interfaces/ICar';
 
 class CarODM {
   private schema: Schema;
-  private model: Model<ICar>;
+  private carModel: Model<ICar>;
 
   constructor() {
     this.schema = new Schema<ICar>({
@@ -16,12 +16,12 @@ class CarODM {
       seatsQty: { type: Number, required: true },
     });
 
-    this.model = models.Car || model('Car', this.schema);
+    this.carModel = models.Car || model('Car', this.schema);
   }
 
   public async create(car: ICar): Promise<ICar | null> {
-    await this.model.create({ ...car });
-    const newCar = await this.model.findOne({
+    await this.carModel.create({ ...car });
+    const newCar = await this.carModel.findOne({
       model: car.model,
       year: car.year,
       color: car.color,
@@ -35,13 +35,40 @@ class CarODM {
   }
 
   public async findCars(): Promise<ICar[] | null> {
-    return this.model.find();
+    return this.carModel.find();
   }
 
   public async findOneCar(id: string): Promise<ICar | null> {
-    return this.model.findOne({
+    return this.carModel.findOne({
       _id: id,
     });
+  }
+
+  public async updateById({ 
+    id,
+    model: carModel,
+    year,
+    color,
+    status,
+    buyValue,
+    doorsQty,
+    seatsQty }: ICar) {
+    this.carModel.updateOne(
+      {
+        _id: id,
+      },
+      { 
+        $set: {
+          model: carModel,
+          year,
+          color,
+          status,
+          buyValue,
+          doorsQty,
+          seatsQty, 
+        },
+      },
+    );
   }
 }
 
