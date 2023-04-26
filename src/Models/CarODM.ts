@@ -33,7 +33,7 @@ class CarODM extends AbstractODM<ICar> {
     return this.model.find();
   }
 
-  public async findOneCar(id: string): Promise<ICar | null> {
+  public async findById(id: string): Promise<ICar | null> {
     return this.model.findOne({
       _id: id,
     });

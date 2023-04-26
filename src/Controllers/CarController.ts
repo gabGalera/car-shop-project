@@ -63,9 +63,9 @@ class CarController {
     return this.res.status(200).json(response);
   }
 
-  public async findOneCar() {
+  public async findById() {
     const { id } = this.req.params;
-    const { type, message } = await this.service.findOneCar(id);
+    const { type, message } = await this.service.findById(id);
 
     if (type) return this.res.status(type).json({ message }); 
 

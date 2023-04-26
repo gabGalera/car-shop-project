@@ -62,6 +62,27 @@ class MotorcycleController {
     }));
     return this.res.status(200).json(response);
   }
+
+  public async findById() {
+    const { id } = this.req.params;
+    const { type, message } = await this.service.findById(id);
+
+    if (type) return this.res.status(type).json({ message }); 
+
+    const moto = message as IMotorcycle;
+
+    const response = {
+      id: moto.id,
+      model: moto.model, 
+      year: moto.year,
+      color: moto.color,
+      status: moto.status,
+      buyValue: moto.buyValue,
+      category: moto.category,
+      engineCapacity: moto.engineCapacity,
+    };
+    return this.res.status(200).json(response);
+  }
 }
 
 export default MotorcycleController;

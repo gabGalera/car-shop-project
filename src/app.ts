@@ -1,7 +1,6 @@
 import express from 'express';
-// import CarController from './Controllers/CarController';
 import ErrorHandler from './Middleware/ErrorHandler';
-import routes from './Routes/Routes';
+import { carRoutes, motoRoutes } from './Routes/Routes';
 
 const app = express();
 
@@ -9,6 +8,8 @@ app.use(express.json());
 
 app.use(ErrorHandler.handle);
 
-app.use(routes);
+app.use('/cars', carRoutes);
+
+app.use('/motorcycles', motoRoutes);
 
 export default app;

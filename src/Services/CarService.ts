@@ -38,14 +38,14 @@ class CarService {
     return { type: 0, message: allCars };
   }
 
-  public async findOneCar(id: string): Promise<{ type: number, message: ICar | null | string }> {
+  public async findById(id: string): Promise<{ type: number, message: ICar | null | string }> {
     const carODM = new CarODM();
 
     const isValidId = isValidObjectId(id);
 
     if (!isValidId) return { type: 422, message: 'Invalid mongo id' };
 
-    const car = await carODM.findOneCar(id);
+    const car = await carODM.findById(id);
 
     if (!car) return { type: 404, message: carNotFound };
     
@@ -67,7 +67,7 @@ class CarService {
 
     if (!isValidId) return { type: 422, message: 'Invalid mongo id' };
 
-    const car = await carODM.findOneCar(id as string);
+    const car = await carODM.findById(id as string);
 
     if (!car) return { type: 404, message: carNotFound };
 
