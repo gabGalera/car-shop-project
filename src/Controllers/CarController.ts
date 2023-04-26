@@ -42,6 +42,21 @@ class CarController {
       this.next(error);
     }
   }
+
+  public async findCars() {
+    const allCars = await this.service.findCars();
+    const response = allCars?.map((car) => ({
+      id: car.id,
+      model: car.model, 
+      year: car.year,
+      color: car.color,
+      status: car.status,
+      buyValue: car.buyValue,
+      doorsQty: car.doorsQty,
+      seatsQty: car.seatsQty,
+    }));
+    return this.res.status(200).json(response);
+  }
 }
   
 export default CarController;

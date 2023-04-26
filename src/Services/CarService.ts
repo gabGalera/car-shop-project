@@ -25,6 +25,11 @@ class CarService {
 
     return this.createCarDomain(newCar);
   }
+
+  public async findCars(): Promise<ICar[] | null> {
+    const carODM = new CarODM();
+    return carODM.findCars();
+  }
 }
 
 export default CarService;
