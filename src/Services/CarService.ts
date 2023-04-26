@@ -1,3 +1,4 @@
+import { isValidObjectId } from 'mongoose';
 import Car from '../Domains/Car';
 import ICar from '../Interfaces/ICar';
 import CarODM from '../Models/CarODM';
@@ -7,6 +8,7 @@ class CarService {
     if (car) {
       return new Car(
         { 
+          id: car.id,
           model: car.model, 
           year: car.year, 
           color: car.color, 
@@ -26,9 +28,27 @@ class CarService {
     return this.createCarDomain(newCar);
   }
 
-  public async findCars(): Promise<ICar[] | null> {
+  public async findCars(): Promise<{ type: number, message: ICar[] | null | string }> {
     const carODM = new CarODM();
-    return carODM.findCars();
+    const allCars = await carODM.findCars();
+
+    if (!allCars) return { type: 404, message: 'Car not found' };
+    
+    return { type: 0, message: allCars };
+  }
+
+  public async findOneCar(id: string): Promise<{ type: number, message: ICar | null | string }> {
+    const carODM = new CarODM();
+
+    const isValidId = isValidObjectId(id);
+
+    if (!isValidId) return { type: 422, message: 'Invalid mongo id' };
+
+    const car = await carODM.findOneCar(id);
+
+    if (!car) return { type: 404, message: 'Car not found' };
+    
+    return { type: 0, message: car };
   }
 }
 

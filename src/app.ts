@@ -8,6 +8,8 @@ app.use(express.json());
 
 app.use(ErrorHandler.handle);
 
+app.get('/cars/:id', (req, res, next) => new CarController(req, res, next).findOneCar());
+
 app.get('/cars', (req, res, next) => new CarController(req, res, next).findCars());
 
 app.post('/cars', (req, res, next) => new CarController(req, res, next).create());

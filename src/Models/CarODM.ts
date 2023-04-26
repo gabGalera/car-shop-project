@@ -20,11 +20,28 @@ class CarODM {
   }
 
   public async create(car: ICar): Promise<ICar | null> {
-    return this.model.create({ ...car });
+    await this.model.create({ ...car });
+    const newCar = await this.model.findOne({
+      model: car.model,
+      year: car.year,
+      color: car.color,
+      status: car.status,
+      buyValue: car.buyValue,
+      doorsQty: car.doorsQty,
+      seatsQty: car.seatsQty,
+    });
+
+    return newCar;
   }
 
   public async findCars(): Promise<ICar[] | null> {
     return this.model.find();
+  }
+
+  public async findOneCar(id: string): Promise<ICar | null> {
+    return this.model.findOne({
+      _id: id,
+    });
   }
 }
 

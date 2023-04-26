@@ -21,7 +21,7 @@ class Car {
       seatsQty, 
     }: ICar,
   ) {
-    this.id = '99';
+    this.id = '';
     this.model = model;
     this.year = year;
     this.color = color;
@@ -33,6 +33,10 @@ class Car {
 
   public getId() {
     return this.id;
+  }
+
+  public setId(id: string) {
+    this.id = id;
   }
 
   public getStatus() {

@@ -44,8 +44,13 @@ class CarController {
   }
 
   public async findCars() {
-    const allCars = await this.service.findCars();
-    const response = allCars?.map((car) => ({
+    const { type, message } = await this.service.findCars();
+
+    if (type) return this.res.status(404).json({ message }); 
+
+    const allCars = message as ICar[];
+
+    const response = allCars.map((car) => ({
       id: car.id,
       model: car.model, 
       year: car.year,
@@ -55,6 +60,27 @@ class CarController {
       doorsQty: car.doorsQty,
       seatsQty: car.seatsQty,
     }));
+    return this.res.status(200).json(response);
+  }
+
+  public async findOneCar() {
+    const { id } = this.req.params;
+    const { type, message } = await this.service.findOneCar(id);
+
+    if (type) return this.res.status(type).json({ message }); 
+
+    const car = message as ICar;
+
+    const response = {
+      id: car.id,
+      model: car.model, 
+      year: car.year,
+      color: car.color,
+      status: car.status,
+      buyValue: car.buyValue,
+      doorsQty: car.doorsQty,
+      seatsQty: car.seatsQty,
+    };
     return this.res.status(200).json(response);
   }
 }
