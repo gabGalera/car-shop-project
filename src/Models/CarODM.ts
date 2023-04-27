@@ -15,18 +15,7 @@ class CarODM extends AbstractODM<ICar> {
   }
 
   public async create(car: ICar): Promise<ICar | null> {
-    await this.model.create({ ...car });
-    const newCar = await this.model.findOne({
-      model: car.model,
-      year: car.year,
-      color: car.color,
-      status: car.status,
-      buyValue: car.buyValue,
-      doorsQty: car.doorsQty,
-      seatsQty: car.seatsQty,
-    });
-
-    return newCar;
+    return this.model.create({ ...car }); 
   }
 
   public async findAll(): Promise<ICar[] | null> {
